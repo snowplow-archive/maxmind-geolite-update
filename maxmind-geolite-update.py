@@ -12,7 +12,7 @@ __status__ = "Production"
 __version__ = "0.1"
 
 # Get the default configuration file for this script
-CONFIG_FILE = os.path.dirname( os.path.realpath( __file__ ) ) + "/nosub.cfg"
+CONFIG_FILE = os.path.dirname( os.path.realpath( __file__ ) ) + "/config.cfg"
 
 def controller():
     """Runs program and handles command line options"""
