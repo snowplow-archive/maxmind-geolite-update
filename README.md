@@ -2,7 +2,7 @@
 
 ## Overview
 
-A Python script to regularly update the free MaxMind geo databases. Closely based on Boris from MaxMind's [Perl script] [perlscript] to accomplish the same.
+A Python script to regularly update the free [MaxMind geo databases] [maxmind]. Closely based on Boris from MaxMind's [Perl script] [perlscript] to accomplish the same.
 
 ## Installing
 
@@ -42,6 +42,7 @@ Assuming you're using the excellent [cronic] [cronic] as a wrapper for your cron
 
 This will check the MaxMind server daily for new files.
 
+[maxmind]: http://www.maxmind.com/app/support
 [perlscript]: http://forum.maxmind.com/viewtopic.php?f=13&t=1453
 [cronic]: http://habilis.net/cronic/
 
