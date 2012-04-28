@@ -17,7 +17,7 @@ Git should preserve the script's execute permission. If it doesn't:
 
 ## Configuring
 
-By default maxmind-geolite-update reads the `nosub.cfg` configuration file. Update its contents as required:
+By default maxmind-geolite-update reads the `config.cfg` configuration file in the same folder. Update its contents as required:
 
     [Local]
     download-dir: /usr/local/share/GeoIP/download
