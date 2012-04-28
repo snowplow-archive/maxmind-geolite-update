@@ -6,9 +6,16 @@ A Python script to regularly update the free MaxMind geo databases. Closely base
 
 ## Installing
 
-Grab the whole repo:
+Grab the whole repo down into your scripts folder or similar:
 
+    cd ~/scripts
     git clone git@github.com:psychicbazaar/maxmind-geolite-update.git
+
+Git should preserve the script's execute permission. If it doesn't:
+
+    chmod +x ./maxmind-geolite-update.py
+
+## Configuring
 
 By default maxmind-geolite-update reads the `nosub.cfg` configuration file. Update its contents as required:
 
@@ -25,6 +32,10 @@ If you subscribe to the commercial MaxMind GeoIP Country database and/or GeoIPCi
 If you want to change the path for the configuration file, you can specify this on the command line like so:
 
     ./maxmind-geolite-update.py --config=~/maxmind.cfg
+
+## Scheduling
+
+This section still to write.
 
 [perlscript]: http://forum.maxmind.com/viewtopic.php?f=13&t=1453
 
