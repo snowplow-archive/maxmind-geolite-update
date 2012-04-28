@@ -6,10 +6,11 @@ A Python script to regularly update the free MaxMind geo databases. Closely base
 
 ## Installing
 
-Grab the whole repo down into your scripts folder or similar:
+Grab the whole repo down and link the Python file into your path:
 
-    cd ~/scripts
     git clone git@github.com:psychicbazaar/maxmind-geolite-update.git
+    cd maxmind-geolite-update
+    sudo ln s ./maxmind-geolite-update.py /usr/bin/local/maxmind-geolite-update
 
 Git should preserve the script's execute permission. If it doesn't:
 
@@ -35,9 +36,14 @@ If you want to change the path for the configuration file, you can specify this 
 
 ## Scheduling
 
-This section still to write.
+Assuming you're using the excellent [cronic] [cronic] as a wrapper for your cronjobs, add the following to your crontab:
+
+    34 15 * * * cronic /usr/local/bin/maxmind-geolite-update
+
+This will check the MaxMind server daily for new files.
 
 [perlscript]: http://forum.maxmind.com/viewtopic.php?f=13&t=1453
+[cronic]: http://habilis.net/cronic/
 
 ## License
 
