@@ -37,7 +37,7 @@ def controller():
     mysql_host = config.get('Local', 'destination-dir')
 
     # MaxMind-specific vars 
-    maxmind_root_uri = config.get('MaxMind', 'root-uri')
+    maxmind_uri = config.get('MaxMind', 'uri')
 
     # MaxMind:local file mappings
     maxmind_files = config._sections['Files']
@@ -45,7 +45,14 @@ def controller():
 
     # Iterate through the files and download as necessary
     for local, remote in maxmind_files.iteritems():
-        print "%s --> %s" % (remote, local)
+        return_code = mirror(maxmind_uri + remote, local)
+
+def mirror(url, file):
+    """Crude approximation of Perl's awesome mirror() function using urllib2"""
+
+    # TODO: implement this
+    print "%s --> %s" % (remote, local)
+    return 200
 
 if __name__ == '__main__':
     controller()
