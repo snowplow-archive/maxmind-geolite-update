@@ -6,6 +6,8 @@
 import os, sys, optparse
 import ConfigParser
 import datetime
+import urllib2
+import zipfile
 
 __author__ = "Alex Dean"
 __copyright__ = "Copyright 2012, Psychic Bazaar Ltd"
@@ -35,7 +37,7 @@ def controller():
 
     # User-configurable vars
     download_dir = config.get('Local', 'download-dir')
-    mysql_host = config.get('Local', 'destination-dir')
+    destination_dir = config.get('Local', 'destination-dir')
 
     # MaxMind-specific vars 
     maxmind_uri = config.get('MaxMind', 'uri')
@@ -45,20 +47,29 @@ def controller():
     del maxmind_files['__name__']
 
     # Check directories exist
-    if not os.path.isdirectory(download_dir):
-        throw # TODO: finish this
-    if not os.path.isdirectory(destination_dir):
-        throw # TODO: finish this
+    if not os.path.isdir(download_dir):
+        raise Exception("Download directory %s does not exist" % download_dir)
+    if not os.path.isdir(destination_dir):
+        raise Exception("Destination directory %s does not exist" % destination_dir)
 
     # Iterate through the files and download as necessary
     for local, remote in maxmind_files.iteritems():
-        return_code = mirror(maxmind_uri + remote, local)
-        if return_code = 200: # TODO: fix this
+        return_code = mirror(maxmind_uri + remote, os.path.join(download_dir, local))
+        if (return_code >= 200 and return_code < 400) and return_code != 304:
+
+            # Generate the unzipped filename
+            unzipped_file = os.path.splitext(local)[0] 
+
             # Unzip the file 
-            # TODO
-            # Move it to the right place
-            # TODO
+            zf = zipfile.ZipFile(local)
+            zf.extract(unzipped_file, destination_dir) 
+
+            # Created notification message and print
+            notification = "Updated MaxMind database file %s" % (destination_dir + "/" + unzipped_file)
+            print notification
+
             # Notify HipChat of the update, if we have an account
+            # TODO
 
 def mirror(uri, file):
     """Crude approximation of Perl's awesome mirror() function using urllib2"""
@@ -79,14 +90,14 @@ def mirror(uri, file):
     headers = resp.info()
 
     # Write the file if we need to
-    if (resp.code >= 200 and uri_handle.code < 400) and uri_handle.code != 304:
+    if (resp.code >= 200 and resp.code < 400) and resp.code != 304:
         local_file = open(file, 'w')
         local_file.write(resp.read())
         local_file.close()
 
     return resp.code
 
-class HipChatLogger():
+# class HipChatLogger():
 
 
 class NotModifiedHandler(urllib2.BaseHandler):

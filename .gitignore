@@ -20,6 +20,10 @@ pip-log.txt
 .coverage
 .tox
 
+# Vim
+.*.swp
+*~
+
 #Translations
 *.mo
 
