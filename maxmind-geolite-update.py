@@ -7,7 +7,7 @@ import os, sys, optparse
 import ConfigParser
 import datetime
 import urllib2
-import zipfile
+import gzip
 
 __author__ = "Alex Dean"
 __copyright__ = "Copyright 2012, Psychic Bazaar Ltd"
@@ -61,14 +61,18 @@ def controller():
         if (return_code >= 200 and return_code < 400) and return_code != 304:
 
             # Generate the unzipped filename
-            unzipped_filename = os.path.splitext(local)[0] 
+            unzipped_file = os.path.join(destination_dir, os.path.splitext(local)[0])
 
             # Unzip the file 
-            zf = zipfile.ZipFile(zipped_file)
-            zf.extract(unzipped_filename, destination_dir) 
+            gz = gzip.open(zipped_file)
+            out = open(unzipped_file, 'w')
+            try:
+                out.writelines(line for line in gz)
+            finally:
+                out.close()
 
             # Created notification message and print
-            notification = "Updated MaxMind database file %s" % os.path.join(destination_dir, unzipped_filename)
+            notification = "Updated MaxMind database file %s" % unzipped_file
             print notification
 
             # Notify HipChat of the update, if we have an account
@@ -83,6 +87,9 @@ def mirror(uri, file):
     # Add the file's datestamp as the If-Modified-Since, if it exists
     if os.path.isfile(file):
         last_modified = os.path.getmtime(file)
+        # TODO
+        datetime.datetime.fromtimestamp(last_modified).strftime("%a, d M Y H:i:s GMT") # Fri, 19 Feb 2010 22:04:23 GMT http://docs.python.org/library/time.html#time.strftime
+ 
         req.add_header("If-Modified-Since", datetime.datetime.fromtimestamp(last_modified))
 
     # Add the user-agent
