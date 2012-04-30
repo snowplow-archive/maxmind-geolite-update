@@ -54,18 +54,21 @@ def controller():
 
     # Iterate through the files and download as necessary
     for local, remote in maxmind_files.iteritems():
-        return_code = mirror(maxmind_uri + remote, os.path.join(download_dir, local))
+ 
+        zipped_file = os.path.join(download_dir, local)          
+        return_code = mirror(maxmind_uri + remote, zipped_file)
+
         if (return_code >= 200 and return_code < 400) and return_code != 304:
 
             # Generate the unzipped filename
-            unzipped_file = os.path.splitext(local)[0] 
+            unzipped_filename = os.path.splitext(local)[0] 
 
             # Unzip the file 
-            zf = zipfile.ZipFile(local)
-            zf.extract(unzipped_file, destination_dir) 
+            zf = zipfile.ZipFile(zipped_file)
+            zf.extract(unzipped_filename, destination_dir) 
 
             # Created notification message and print
-            notification = "Updated MaxMind database file %s" % (destination_dir + "/" + unzipped_file)
+            notification = "Updated MaxMind database file %s" % os.path.join(destination_dir, unzipped_filename)
             print notification
 
             # Notify HipChat of the update, if we have an account
