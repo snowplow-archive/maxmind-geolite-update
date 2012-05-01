@@ -39,7 +39,7 @@ The last section uses the [HipChat CLI scripts] [hipchatcli] (specifically `hipc
     from-name: maxmind-geolite-update
     color: purple
 
-If you do not use HipChat, please delete this whole section from your config file (including the `[HipChat]` title).
+If you do not use HipChat, delete this whole section from your config file (including the `[HipChat]` title).
 
 If you want to change the path for the configuration file at runtime, you can specify this on the command line like so:
 
@@ -51,7 +51,7 @@ Assuming you're using the excellent [cronic] [cronic] as a wrapper for your cron
 
     34 15 * * * cronic /usr/local/bin/maxmind-geolite-update
 
-This will check the MaxMind server daily for new files.
+This will check the MaxMind server daily for new files. Do not check more than once every 24 hours, or you will get 403'ed by MaxMind.
 
 [maxmind]: http://www.maxmind.com/app/support
 [perlscript]: http://forum.maxmind.com/viewtopic.php?f=13&t=1453
