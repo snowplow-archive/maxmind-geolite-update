@@ -39,7 +39,7 @@ The last section uses the [HipChat CLI scripts] [hipchatcli] (specifically `hipc
     from-name: maxmind-geolite-update
     color: purple
 
-If you do not use HipChat, please delete this whole section from your config file (including the "[HipChat]" title).
+If you do not use HipChat, please delete this whole section from your config file (including the `[HipChat]` title).
 
 If you want to change the path for the configuration file at runtime, you can specify this on the command line like so:
 
