@@ -30,7 +30,18 @@ If you subscribe to the commercial MaxMind GeoIP Country database and/or GeoIPCi
     ; GeoIP.dat.gz: GeoLiteCountry/GeoIP.dat.gz ; DELETE this line if you are a subscriber
     ; GeoIPCity.dat.gz: GeoLiteCity.dat.gz ; DELETE this line if you are a subscriber.
 
-If you want to change the path for the configuration file, you can specify this on the command line like so:
+The last section uses the [HipChat CLI scripts] [hipchatcli] (specifically `hipchat_room_message`) to send a notification of a successful file update to HipChat:
+
+    [HipChat]
+    cli-path: /usr/local/bin/hipchat_room_message
+    room-id: <<HipChat Room ID>>
+    token: <<HipChat API token (can be notification only token)>>
+    from-name: maxmind-geolite-update
+    color: purple
+
+If you do not use HipChat, please delete this whole section from your config file (including the "[HipChat]" title).
+
+If you want to change the path for the configuration file at runtime, you can specify this on the command line like so:
 
     ./maxmind-geolite-update.py --config=~/maxmind.cfg
 
@@ -44,6 +55,7 @@ This will check the MaxMind server daily for new files.
 
 [maxmind]: http://www.maxmind.com/app/support
 [perlscript]: http://forum.maxmind.com/viewtopic.php?f=13&t=1453
+[hipchatcli]: https://github.com/hipchat/hipchat-cli
 [cronic]: http://habilis.net/cronic/
 
 ## License
