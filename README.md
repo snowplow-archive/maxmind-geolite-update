@@ -8,7 +8,7 @@ A Python script to regularly update the free [MaxMind geo databases] [maxmind]. 
 
 Grab the whole repo down and link the Python file into your path:
 
-    git clone git@github.com:psychicbazaar/maxmind-geolite-update.git
+    git clone git://github.com/psychicbazaar/maxmind-geolite-update.git
     cd maxmind-geolite-update
     sudo ln -s ./maxmind-geolite-update.py /usr/bin/local/maxmind-geolite-update
 
