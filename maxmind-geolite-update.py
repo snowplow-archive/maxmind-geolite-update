@@ -86,11 +86,10 @@ def mirror(uri, file):
 
     # Add the file's datestamp as the If-Modified-Since, if it exists
     if os.path.isfile(file):
-        last_modified = os.path.getmtime(file)
-        # TODO
-        datetime.datetime.fromtimestamp(last_modified).strftime("%a, d M Y H:i:s GMT") # Fri, 19 Feb 2010 22:04:23 GMT http://docs.python.org/library/time.html#time.strftime
- 
-        req.add_header("If-Modified-Since", datetime.datetime.fromtimestamp(last_modified))
+        mtime = os.path.getmtime(file)
+        if_modified_since = datetime.datetime.fromtimestamp(mtime).strftime("%a, %d %b %Y %H:%M:%S GMT") # e.g. Fri, 02 Feb 2010 22:04:23 GMT
+        print if_modified_since 
+        req.add_header("If-Modified-Since", if_modified_since)
 
     # Add the user-agent
     req.add_header("User-agent", "maxmind-geolite-update/" + __version__)
@@ -108,7 +107,11 @@ def mirror(uri, file):
     return resp.code
 
 # class HipChatLogger():
+    """Simple class to handle notifications to HipChat. Wraps the Bash notification script rather than using python-hipchat (which is more complex)"""
 
+    def __init__(self, config):
+        """Prepare the HipChat notification command from the config dict"""
+        self.hipchat_command = "" # TODO
 
 class NotModifiedHandler(urllib2.BaseHandler):
     """Taken from http://www.artima.com/forums/flat.jsp?forum=122&thread=15024"""
