@@ -35,7 +35,7 @@ The last section uses the [HipChat CLI scripts] [hipchatcli] (specifically `hipc
     [HipChat]
     cli-path: /usr/local/bin/hipchat_room_message
     room-id: <<HipChat Room ID>>
-    token: <<HipChat API token (can be notification only token)>>
+    token: <<HipChat API token (can be notification-only token)>>
     from-name: maxmind-geolite-update
     color: purple
 
