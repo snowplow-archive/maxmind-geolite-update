@@ -37,8 +37,7 @@ def controller():
     download_dir = config.get('Local', 'download-dir')
     destination_dir = config.get('Local', 'destination-dir')
     maxmind_uri = config.get('MaxMind', 'uri')
-    maxmind_files = config._sections['Files']
-    del maxmind_files['__name__']
+    maxmind_files = config.items("Files")
     hipchat_logger = HipChatLogger(config._sections) 
 
     # Check directories exist
@@ -48,10 +47,11 @@ def controller():
         raise Exception("Destination directory %s does not exist" % destination_dir)
 
     # Iterate through the files and download as necessary
-    for local, remote in maxmind_files.iteritems():
- 
+    for _, remote in maxmind_files:
+
+        local = os.path.basename(remote)
         zipped_file = os.path.join(download_dir, local)          
-        return_code = 200 # mirror(maxmind_uri + remote, zipped_file)
+        return_code = mirror(maxmind_uri + remote, zipped_file)
 
         if (return_code >= 200 and return_code < 400) and return_code != 304:
 

@@ -27,8 +27,8 @@ By default maxmind-geolite-update reads the `config.cfg` configuration file in t
 If you subscribe to the commercial MaxMind GeoIP Country database and/or GeoIPCity database, then make sure to comment out the first two lines in the `[Files]` section, to avoid clashing with MaxMind's `ipupdate` tool:
 
     [Files]
-    ; GeoIP.dat.gz: GeoLiteCountry/GeoIP.dat.gz ; DELETE this line if you are a subscriber
-    ; GeoIPCity.dat.gz: GeoLiteCity.dat.gz ; DELETE this line if you are a subscriber.
+    ; file1: GeoLiteCountry/GeoIP.dat.gz ; DELETE this line if you are a subscriber
+    ; file2: GeoLiteCity.dat.gz ; DELETE this line if you are a subscriber 
 
 The last section uses the [HipChat CLI scripts] [hipchatcli] (specifically `hipchat_room_message`) to send a notification of a successful file update to HipChat:
 
