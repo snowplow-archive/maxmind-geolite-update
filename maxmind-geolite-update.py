@@ -71,14 +71,24 @@ def controller():
             print notification
             hipchat_logger.notify(notification)
 
+class HipChatLogger():
+    """Simple class to handle notifications to HipChat. Wraps the Bash notification script rather than using python-hipchat (which is more complex)"""
+
+    def __init__(self, config):
+        """Prepare the HipChat notification command from the config's HipChat dict, if there is one"""
+
+        if 'HipChat' in config:
+            self.hipchat_command = "%(cli-path)s -t %(token)s -r %(room-id)s -c %(color)s -f \"%(from-name)s\"" % config['HipChat']
+        else:
+            self.hipchat_command = None
+
+    def notify(self, message):
+        """Send a message to HipChat"""
+
+        if self.hipchat_command is not None:
+            os.system("echo \"%s\" | %s" % (message, self.hipchat_command))
+
 def mirror(uri, file):
-
-    # Add the file's datestamp as the If-Modified-Since, if it exists
-    if os.path.isfile(file):
-        mtime = os.path.getmtime(file)
-        if_modified_since = datetime.datetime.fromtimestamp(mtime).strftime("%a, %d %b %Y %H:%M:%S GMT") # e.g. Fri, 02 Feb 2010 22:04:23 GMT
-
-def _mirror(uri, file):
     """Crude approximation of Perl's awesome mirror() function using urllib2"""
 
     # Start building the request
@@ -104,23 +114,6 @@ def _mirror(uri, file):
         local_file.close()
 
     return resp.code
-
-class HipChatLogger():
-    """Simple class to handle notifications to HipChat. Wraps the Bash notification script rather than using python-hipchat (which is more complex)"""
-
-    def __init__(self, config):
-        """Prepare the HipChat notification command from the config's HipChat dict, if there is one"""
-
-        if 'HipChat' in config:
-            self.hipchat_command = "%(cli-path)s -t %(token)s -r %(room-id)s -c %(color)s -f \"%(from-name)s\"" % config['HipChat']
-        else:
-            self.hipchat_command = None
-
-    def notify(self, message):
-        """Send a message to HipChat"""
-
-        if self.hipchat_command is not None:
-            os.system("echo \"%s\" | %s" % (message, self.hipchat_command))
 
 class NotModifiedHandler(urllib2.BaseHandler):
     """Taken from http://www.artima.com/forums/flat.jsp?forum=122&thread=15024"""
