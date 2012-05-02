@@ -49,7 +49,7 @@ If you want to change the path for the configuration file at runtime, you can sp
 
 Assuming you're using the excellent [cronic] [cronic] as a wrapper for your cronjobs, add the following to your crontab:
 
-    34 15 * * * cronic /usr/local/bin/maxmind-geolite-update
+    54 14   * * *   root    cronic /usr/local/bin/maxmind-geolite-update
 
 This will check the MaxMind server daily for new files. Do not check more than once every 24 hours, or you will get 403'ed by MaxMind.
 
